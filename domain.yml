@@ -1,0 +1,78 @@
+version: "2.0"
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - pede_exemplo_form_from_text
+
+slots:
+  nome:
+    type: text
+    influence_conversation: true
+    auto_fill: false
+  email:
+    type: text
+    influence_conversation: true
+    auto_fill: false
+  idade:
+    type: text
+    influence_conversation: true
+    auto_fill: false
+
+responses:
+  utter_explica_exemplo_form:
+  - text: "Agora você entrou em uma story que ativou um formulário! Aqui tem a documentação do Rasa sobre formulários: [documentação](https://rasa.com/docs/rasa/forms/). \n Vou te fazer algumas perguntas, responda elas pra mim pra que você possa sair deste loop."
+  utter_ask_nome:
+  - text: Qual o seu nome?
+  utter_ask_idade:
+  - text: Qual a sua idade?
+  utter_ask_email:
+  - text: "{nome} qual o seu email?"
+  utter_slots_exemplo_form:
+  - text: "No formulário eu preenchi o slot NOME com o seguinte valor: {nome}"
+  utter_submit_exemplo_form:
+  - text: Ótimo! terminamos seu exemplo de formulário!
+  utter_wrong_email:
+  - text: Opa! Tem alguma coisa errada...
+  utter_greet:
+  - text: "Ei! Como você está?"
+    buttons:
+    - title: "Estou bem, chamar formulário"
+      payload: "/pede_exemplo_form_from_text"
+    - title: "Não quero conversar, tchau"
+      payload: "/goodbye"
+  utter_cheer_up:
+  - text: "Aqui está algo para animá-lo:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+  utter_did_that_help:
+  - text: "Isso te ajudou?"
+  utter_happy:
+  - text: "Ótimo, continue!"
+  utter_goodbye:
+  - text: "tchau"
+  utter_iamabot:
+  - text: "Eu sou um bot, desenvolvido por Rasa."
+
+actions:
+- validate_exemplo_form
+
+forms:
+  exemplo_form:
+    required_slots:
+      nome:
+      - type: from_text
+        entity: nome
+      email:
+      - type: from_text
+        entity: email
+      idade:
+      - type: from_text
+        entity: idade

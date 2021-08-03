@@ -1,0 +1,31 @@
+language: pt-br
+
+pipeline:
+  - name: WhitespaceTokenizer
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    epochs: 200
+    model_confidence: softmax
+    constrain_similarities: True
+  - name: EntitySynonymMapper
+  - name: ResponseSelector
+    model_confidence: softmax
+    epochs: 100
+    constrain_similarities: True
+  - name: FallbackClassifier
+    threshold: 0.7
+    ambiguity_threshold: 0.1
+
+policies:
+  - name: RulePolicy
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    model_confidence: softmax
+    constrain_similarities: True
