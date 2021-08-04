@@ -12,6 +12,7 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
+# Ativar formulário tradicional (from_text)
 - rule: Ativa formulário
   steps:
   - intent: pede_exemplo_form_from_text
@@ -24,6 +25,28 @@ rules:
   - active_loop: exemplo_form
   steps:
   - action: exemplo_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit_exemplo_form
+  - action: utter_slots_exemplo_form
+
+# Ativar formulário por intent e recuperar dado por entidade (from_entity)
+# TODO: Problema na extração de informação do input do usuário
+- rule: Ativa formulário entity
+  steps:
+  - intent: informar
+    entities:
+      - formulario
+  - action: utter_explica_exemplo_form
+  - action: exemplo_form_entity
+  - active_loop: exemplo_form_entity
+
+- rule: Enviar formulário entity
+  condition:
+  - active_loop: exemplo_form_entity
+  steps:
+  - action: exemplo_form_entity
   - active_loop: null
   - slot_was_set:
     - requested_slot: null

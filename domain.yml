@@ -12,6 +12,17 @@ intents:
   - mood_unhappy
   - bot_challenge
   - pede_exemplo_form_from_text
+  - pede_exemplo_form_from_entity
+  - informar
+  - intent_name
+  - intent_email
+  - intent_idade
+
+entites:
+  - formulario
+  - nome
+  - email
+  - idade
 
 slots:
   nome:
@@ -38,6 +49,8 @@ responses:
   - text: "{nome} qual o seu email?"
   utter_slots_exemplo_form:
   - text: "No formulário eu preenchi o slot NOME com o seguinte valor: {nome}"
+  utter_values_slots:
+  - text: "Slots preenchidos: {nome}, {email}, {idade}"
   utter_submit_exemplo_form:
   - text: Ótimo! terminamos seu exemplo de formulário!
   utter_wrong_email:
@@ -63,16 +76,31 @@ responses:
 
 actions:
 - validate_exemplo_form
+- action_exemplo_form_entity
 
 forms:
   exemplo_form:
     required_slots:
       nome:
       - type: from_text
-        entity: nome
+        intent: intent_nome
       email:
       - type: from_text
-        entity: email
+        intent: intent_email
       idade:
       - type: from_text
-        entity: idade
+        intent: intent_idade
+  exemplo_form_entity:
+      required_slots:
+        nome:
+        - type: from_entity
+          entity: nome
+          intent: informar
+        email:
+        - type: from_entity
+          entity: email
+          intent: informar
+        idade:
+        - type: from_entity
+          entity: idade
+          intent: informar

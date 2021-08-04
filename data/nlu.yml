@@ -90,3 +90,20 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
+- intent: informar
+  examples: |
+    - [Arthur](nome)
+    - O meu nome é [Arthur](nome)
+    - me chamo [Arthur](nome)
+    - Meu nome: [Arthur](nome)
+    - Claro, meu nome é [Arthur](nome)
+    - [25](idade)
+    - Minha idade é [25](idade)
+    - Tenho [25](idade) anos
+    - Eu tenho [25](idade) anos
+    - Tenho: [25](idade)
+    - Meu email é [elyas@gmail.com](email)
+    - Claro, o meu email é [lucas@gmail.com](email)
+    - o email é [thiago@hotmail.com](email)
+    - [licio@outlook.com](email)
