@@ -4,6 +4,7 @@ from typing import Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 
 
 class ValidateExemploForm(FormValidationAction):
@@ -27,12 +28,28 @@ class ValidateExemploForm(FormValidationAction):
 
 
 class ActionExemploForm(Action):
-
     def name(self) -> str:
         return "action_exemplo_form_entity"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[str, dict]) -> List[Dict[str, dict]]:
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[str, dict],
+    ) -> List[Dict[str, dict]]:
 
         dispatcher.utter_message(template="utter_values_slots")
+
+
+class ActionCleanSlots(Action):
+    def name(self) -> str:
+        return "action_clean_slots"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[str, dict],
+    ) -> List[Dict[str, dict]]:
+
+        return [SlotSet(slot, None) for slot in tracker.slots]
